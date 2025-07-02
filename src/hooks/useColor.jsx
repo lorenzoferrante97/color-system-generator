@@ -7,6 +7,9 @@ const useColor = () => {
   //NOTE - input color by user
   const inputColor = useRef(null);
 
+  //NOTE - base color
+  const [baseColor, setBaseColor] = useState(null);
+
   // --- FUNCTIONS ----------------------------------------------------------
 
   //NOTE - get hsl object color
@@ -21,10 +24,21 @@ const useColor = () => {
     return formatHsl(color);
   };
 
+  // --- HANDLE --------------------
+
+  const handleClick = () => {
+    const convertedColor = getHslColor(
+      getHslObjColor(inputColor.current.value)
+    );
+    setBaseColor(convertedColor);
+  };
+
   return {
     inputColor,
+    baseColor,
     getHslObjColor,
     getHslColor,
+    handleClick,
   };
 };
 

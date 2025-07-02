@@ -4,9 +4,16 @@ import useColor from '../hooks/useColor';
 
 const GlobalProvider = ({ children }) => {
   // USECOLOR -----------------------------------------------
-  const { inputColor, getHslObjColor, getHslColor } = useColor();
+  const { inputColor, baseColor, getHslObjColor, getHslColor, handleClick } =
+    useColor();
 
-  const value = { inputColor, getHslObjColor, getHslColor };
+  const value = {
+    inputColor,
+    baseColor,
+    getHslObjColor,
+    getHslColor,
+    handleClick,
+  };
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
@@ -15,4 +22,5 @@ const GlobalProvider = ({ children }) => {
 
 const useGlobalContext = () => useContext(GlobalContext);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { GlobalProvider, useGlobalContext };

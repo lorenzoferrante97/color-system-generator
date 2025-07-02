@@ -4,7 +4,8 @@ import { useGlobalContext } from '../contexts/globalContext';
 
 export default function Home() {
   // --- GLOBAL CONTEXT -----------------------------------------------------
-  const { inputColor, getHslObjColor, getHslColor } = useGlobalContext();
+  const { inputColor, getHslObjColor, getHslColor, baseColor, handleClick } =
+    useGlobalContext();
 
   return (
     <>
@@ -17,7 +18,16 @@ export default function Home() {
             type='text'
             name='baseColor'
           />
-          <button className='bg-black text-white'>Crea la Palette</button>
+          <button onClick={handleClick} className='bg-black text-white'>
+            Crea la Palette
+          </button>
+        </div>
+        {/* Show colors */}
+        <div>
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${baseColor}` }}
+          />
         </div>
       </div>
     </>
