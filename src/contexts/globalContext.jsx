@@ -4,8 +4,14 @@ import useColor from '../hooks/useColor';
 
 const GlobalProvider = ({ children }) => {
   // USECOLOR -----------------------------------------------
-  const { inputColor, baseColor, getHslObjColor, getHslColor, handleClick } =
-    useColor();
+  const {
+    inputColor,
+    baseColor,
+    getHslObjColor,
+    getHslColor,
+    handleClick,
+    baseNeutrals,
+  } = useColor();
 
   const value = {
     inputColor,
@@ -13,6 +19,7 @@ const GlobalProvider = ({ children }) => {
     getHslObjColor,
     getHslColor,
     handleClick,
+    baseNeutrals,
   };
 
   return (

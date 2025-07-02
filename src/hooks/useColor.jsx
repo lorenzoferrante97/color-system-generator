@@ -18,6 +18,12 @@ const useColor = () => {
   //NOTE - base color
   const [baseColor, setBaseColor] = useState(null);
 
+  //NOTE - base neutrals
+  const [baseNeutrals, setBaseNeutrals] = useState({
+    baseLight: null,
+    baseDark: null,
+  });
+
   // --- FUNCTIONS ----------------------------------------------------------
 
   //NOTE - get hsl object color
@@ -33,23 +39,36 @@ const useColor = () => {
   };
 
   //NOTE - get base neutrals
-  const getBaseNeutrals = (color) => {};
+  const getBaseNeutrals = (color) => {
+    const fixedHue = color.h;
+    const tempLight = { mode: 'hsl', h: fixedHue, s: 0.2, l: 0.98 };
+    const tempDark = { mode: 'hsl', h: fixedHue, s: 0.2, l: 0.08 };
+
+    setBaseNeutrals({
+      baseLight: formatHsl(tempLight),
+      baseDark: formatHsl(tempDark),
+    });
+  };
 
   // --- HANDLE --------------------
 
   const handleClick = () => {
-    // const convertedColor = getHslColor(
-    //   getHslObjColor(inputColor.current.value)
-    // );
     const obj = getHslObjColor(inputColor?.current.value);
     setHslObjColor(obj);
     const hsl = getHslColor(obj);
     setBaseColor(hsl);
   };
 
+  useEffect(() => {
+    if (hslObjColor?.h !== 0) {
+      getBaseNeutrals(hslObjColor);
+    }
+  }, [hslObjColor]);
+
   return {
     inputColor,
     baseColor,
+    baseNeutrals,
     getHslObjColor,
     getHslColor,
     handleClick,

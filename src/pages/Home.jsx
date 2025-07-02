@@ -4,8 +4,16 @@ import { useGlobalContext } from '../contexts/globalContext';
 
 export default function Home() {
   // --- GLOBAL CONTEXT -----------------------------------------------------
-  const { inputColor, getHslObjColor, getHslColor, baseColor, handleClick } =
-    useGlobalContext();
+  const {
+    inputColor,
+    getHslObjColor,
+    getHslColor,
+    baseColor,
+    handleClick,
+    baseNeutrals,
+  } = useGlobalContext();
+
+  console.log('baseNeutrals: ', baseNeutrals);
 
   return (
     <>
@@ -28,6 +36,20 @@ export default function Home() {
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${baseColor}` }}
+          />
+        </div>
+        <div>
+          <span>{baseNeutrals?.baseLight}</span>
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${baseNeutrals?.baseLight}` }}
+          />
+        </div>
+        <div>
+          <span>{baseNeutrals?.baseDark}</span>
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${baseNeutrals?.baseDark}` }}
           />
         </div>
       </div>
