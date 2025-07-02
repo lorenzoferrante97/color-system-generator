@@ -9,12 +9,6 @@ const useColor = () => {
 
   // --- FUNCTIONS ----------------------------------------------------------
 
-  //NOTE - handle user color
-  const handleHexColor = (e) => {
-    e.preventDefault();
-    inputColor.current = e.target.value;
-  };
-
   //NOTE - get hsl object color
   const getHslObjColor = (color) => {
     if (!color) return null;
@@ -27,7 +21,11 @@ const useColor = () => {
     return formatHsl(color);
   };
 
-  return;
+  return {
+    inputColor,
+    getHslObjColor,
+    getHslColor,
+  };
 };
 
 export default useColor;

@@ -1,8 +1,12 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 const GlobalContext = createContext();
+import useColor from '../hooks/useColor';
 
 const GlobalProvider = ({ children }) => {
-  const value = {};
+  // USECOLOR -----------------------------------------------
+  const { inputColor, getHslObjColor, getHslColor } = useColor();
+
+  const value = { inputColor, getHslObjColor, getHslColor };
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
