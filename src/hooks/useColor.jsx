@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { hsl, formatHsl } from 'culori';
 
 const useColor = () => {
@@ -52,12 +52,12 @@ const useColor = () => {
 
   // --- HANDLE --------------------
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     const obj = getHslObjColor(inputColor?.current.value);
     setHslObjColor(obj);
     const hsl = getHslColor(obj);
     setBaseColor(hsl);
-  };
+  }, []);
 
   useEffect(() => {
     if (hslObjColor?.h !== 0) {
