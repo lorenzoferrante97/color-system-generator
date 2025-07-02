@@ -24,6 +24,7 @@ export default function Home() {
         </div>
         {/* Show colors */}
         <div>
+          <span>{baseColor}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${baseColor}` }}
