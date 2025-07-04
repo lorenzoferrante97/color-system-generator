@@ -155,7 +155,8 @@ const useColor = () => {
     textColor,
     minContrast,
     minContrastWithBg,
-    bgColor
+    bgColor,
+    role
   ) => {
     const primarySolid = findBgColor(
       palette,
@@ -167,8 +168,8 @@ const useColor = () => {
     setPrimaryRoles((prev) => {
       return {
         ...prev,
-        solid: primarySolid,
-        ['on solid']: textColor,
+        [role]: primarySolid,
+        [`on ${role}`]: textColor,
       };
     });
   };
@@ -204,8 +205,10 @@ const useColor = () => {
       baseNeutrals?.baseLight,
       75,
       60,
-      baseNeutrals?.baseLight
+      baseNeutrals?.baseLight,
+      'solid'
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [basePalette, baseNeutrals?.baseLight]);
 
   return {
