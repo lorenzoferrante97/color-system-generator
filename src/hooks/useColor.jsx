@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { hsl, formatHsl } from 'culori';
+import { hsl, formatHsl, samples, interpolate, toGamut } from 'culori';
 
 const useColor = () => {
   // --- VARIABLES ----------------------------------------------------------
@@ -7,7 +7,7 @@ const useColor = () => {
   //NOTE - input color by user
   const inputColor = useRef(null);
 
-  //NOTE - hsl Obj Color
+  //NOTE - base color (hsl obj)
   const [hslObjColor, setHslObjColor] = useState({
     mode: 'hsl',
     h: 0,
@@ -15,7 +15,7 @@ const useColor = () => {
     l: 0,
   });
 
-  //NOTE - base color
+  //NOTE - base color (hsl string)
   const [baseColor, setBaseColor] = useState(null);
 
   //NOTE - base neutrals
@@ -23,6 +23,9 @@ const useColor = () => {
     baseLight: null,
     baseDark: null,
   });
+
+  //NOTE - tints & shades
+  const [basePalette, setBasepalette] = useState([]);
 
   // --- FUNCTIONS ----------------------------------------------------------
 
@@ -50,6 +53,51 @@ const useColor = () => {
     });
   };
 
+  //NOTE - wrap hue between 0-360
+  const wrapHue = (color) => {
+    const h = ((color.h % 360) + 360) % 360;
+    return { ...color, h };
+  };
+
+  //NOTE - get tints
+  const getBasePalette = (color, steps) => {
+    const baseStep = {
+      mode: 'hsl',
+      h: color.h,
+      s: 0.75,
+      l: 0.55,
+    };
+    const lastTintStep = {
+      mode: 'hsl',
+      h: color.h + 20,
+      s: 0.98,
+      l: 0.98,
+    };
+    const lastShadeStep = {
+      mode: 'hsl',
+      h: color.h - 20,
+      s: 0.98,
+      l: 0.05,
+    };
+
+    // create tints
+    const interpolatedTints = interpolate([lastTintStep, baseStep], 'hsl');
+    const tints = samples(steps)
+      .map(interpolatedTints)
+      .map((c) => wrapHue(c))
+      .map(formatHsl);
+
+    // gamut hsl
+    const toHsl = toGamut('hsl');
+
+    // create shades
+    const interpolatedShades = interpolate([baseStep, lastShadeStep], 'hsl');
+    let shades = samples(steps).map(interpolatedShades).map(formatHsl);
+    shades.shift();
+
+    setBasepalette([...tints, ...shades]);
+  };
+
   // --- HANDLE --------------------
 
   const handleClick = useCallback(() => {
@@ -65,10 +113,18 @@ const useColor = () => {
     }
   }, [hslObjColor]);
 
+  useEffect(() => {
+    if (baseNeutrals.baseLight !== null) {
+      getBasePalette(hslObjColor, 12);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [baseNeutrals]);
+
   return {
     inputColor,
     baseColor,
     baseNeutrals,
+    basePalette,
     getHslObjColor,
     getHslColor,
     handleClick,

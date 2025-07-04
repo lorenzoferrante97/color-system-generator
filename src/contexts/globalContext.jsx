@@ -7,19 +7,21 @@ const GlobalProvider = ({ children }) => {
   const {
     inputColor,
     baseColor,
+    basePalette,
+    baseNeutrals,
     getHslObjColor,
     getHslColor,
     handleClick,
-    baseNeutrals,
   } = useColor();
 
   const value = {
     inputColor,
     baseColor,
+    baseNeutrals,
+    basePalette,
     getHslObjColor,
     getHslColor,
     handleClick,
-    baseNeutrals,
   };
 
   return (

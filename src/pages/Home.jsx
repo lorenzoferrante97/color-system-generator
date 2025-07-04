@@ -11,9 +11,8 @@ export default function Home() {
     baseColor,
     handleClick,
     baseNeutrals,
+    basePalette,
   } = useGlobalContext();
-
-  console.log('baseNeutrals: ', baseNeutrals);
 
   return (
     <>
@@ -51,6 +50,19 @@ export default function Home() {
             className='aspect-square size-12'
             style={{ backgroundColor: `${baseNeutrals?.baseDark}` }}
           />
+        </div>
+        {/* base palette */}
+        {console.log('base palette: ', basePalette)}
+        <div className='flex items-center'>
+          {basePalette.map((color, i) => {
+            return (
+              <div
+                key={i}
+                className='aspect-square size-8'
+                style={{ backgroundColor: `${color}` }}
+              />
+            );
+          })}
         </div>
       </div>
     </>
