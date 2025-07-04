@@ -1,5 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { hsl, formatHsl, samples, interpolate, toGamut } from 'culori';
+import {
+  hsl,
+  formatHsl,
+  samples,
+  interpolate,
+  toGamut,
+  clampGamut,
+} from 'culori';
 
 const useColor = () => {
   // --- VARIABLES ----------------------------------------------------------
@@ -80,19 +87,27 @@ const useColor = () => {
       l: 0.05,
     };
 
+    // clamp gamut
+    const clamp = clampGamut('rgb');
+
     // create tints
     const interpolatedTints = interpolate([lastTintStep, baseStep], 'hsl');
     const tints = samples(steps)
       .map(interpolatedTints)
+      .map(clamp)
       .map((c) => wrapHue(c))
       .map(formatHsl);
 
     // gamut hsl
-    const toHsl = toGamut('hsl');
+    // const toHsl = toGamut('hsl');
 
     // create shades
     const interpolatedShades = interpolate([baseStep, lastShadeStep], 'hsl');
-    let shades = samples(steps).map(interpolatedShades).map(formatHsl);
+    let shades = samples(steps)
+      .map(interpolatedShades)
+      .map(clamp)
+      .map((c) => wrapHue(c))
+      .map(formatHsl);
     shades.shift();
 
     setBasepalette([...tints, ...shades]);
