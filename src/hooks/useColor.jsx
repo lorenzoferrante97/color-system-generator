@@ -127,18 +127,50 @@ const useColor = () => {
   };
 
   // find bg color with correct APCA contrast
-  const findBgColor = (palette, textColor, minContrast) => {
+  const findBgColor = (
+    palette,
+    textColor,
+    minContrast,
+    minContrastWithBg,
+    bgColor
+  ) => {
     if (!palette || !textColor) return null;
 
     const rgbTextColor = formatRgb(rgb(textColor));
+    const rgbBgAppColor = formatRgb(rgb(bgColor));
+
     const validBg = palette.find((bg) => {
       const rgbBgColor = formatRgb(rgb(bg));
       const contrast = Math.abs(calcAPCA(rgbTextColor, rgbBgColor));
-      console.log('contrast', contrast);
-      return contrast >= minContrast;
+      const contrastWithBg = Math.abs(calcAPCA(rgbBgColor, rgbBgAppColor));
+      return contrast >= minContrast && contrastWithBg >= minContrastWithBg;
     });
 
     return validBg || null;
+  };
+
+  // get roles
+  const getRoles = (
+    palette,
+    textColor,
+    minContrast,
+    minContrastWithBg,
+    bgColor
+  ) => {
+    const primarySolid = findBgColor(
+      palette,
+      textColor,
+      minContrast,
+      minContrastWithBg,
+      bgColor
+    );
+    setPrimaryRoles((prev) => {
+      return {
+        ...prev,
+        solid: primarySolid,
+        ['on solid']: textColor,
+      };
+    });
   };
 
   // --- HANDLE --------------------
@@ -166,15 +198,14 @@ const useColor = () => {
 
   useEffect(() => {
     if (basePalette?.length == 0 || !baseNeutrals?.baseLight) return;
-    const primarySolid = findBgColor(basePalette, baseNeutrals?.baseLight, 75);
-    console.log('primarySolid', primarySolid);
-    setPrimaryRoles((prev) => {
-      return {
-        ...prev,
-        solid: primarySolid,
-        ['on solid']: baseNeutrals?.baseLight,
-      };
-    });
+
+    getRoles(
+      basePalette,
+      baseNeutrals?.baseLight,
+      75,
+      60,
+      baseNeutrals?.baseLight
+    );
   }, [basePalette, baseNeutrals?.baseLight]);
 
   return {
