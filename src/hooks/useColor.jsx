@@ -156,7 +156,8 @@ const useColor = () => {
     minContrast,
     minContrastWithBg,
     bgColor,
-    role
+    role,
+    setRoleGroup
   ) => {
     const primarySolid = findBgColor(
       palette,
@@ -165,7 +166,7 @@ const useColor = () => {
       minContrastWithBg,
       bgColor
     );
-    setPrimaryRoles((prev) => {
+    setRoleGroup((prev) => {
       return {
         ...prev,
         [role]: primarySolid,
@@ -206,7 +207,8 @@ const useColor = () => {
       75,
       60,
       baseNeutrals?.baseLight,
-      'solid'
+      'solid',
+      setPrimaryRoles
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [basePalette, baseNeutrals?.baseLight]);
