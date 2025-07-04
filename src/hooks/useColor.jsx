@@ -1,12 +1,17 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   hsl,
+  formatHex,
   formatHsl,
+  oklch,
+  formatCss,
+  rgb,
+  formatRgb,
   samples,
   interpolate,
-  toGamut,
   clampGamut,
 } from 'culori';
+import { calcAPCA, sRGBtoY } from 'apca-w3';
 
 const useColor = () => {
   // --- VARIABLES ----------------------------------------------------------
@@ -33,6 +38,14 @@ const useColor = () => {
 
   //NOTE - tints & shades
   const [basePalette, setBasepalette] = useState([]);
+
+  //NOTE - primary roles
+  const [primaryRoles, setPrimaryRoles] = useState({
+    solid: null,
+    ['on solid']: null,
+    soft: null,
+    ['on soft']: null,
+  });
 
   // --- FUNCTIONS ----------------------------------------------------------
 
@@ -113,6 +126,21 @@ const useColor = () => {
     setBasepalette([...tints, ...shades]);
   };
 
+  // find bg color with correct APCA contrast
+  const findBgColor = (palette, textColor, minContrast) => {
+    if (!palette || !textColor) return null;
+
+    const rgbTextColor = formatRgb(rgb(textColor));
+    const validBg = palette.find((bg) => {
+      const rgbBgColor = formatRgb(rgb(bg));
+      const contrast = Math.abs(calcAPCA(rgbTextColor, rgbBgColor));
+      console.log('contrast', contrast);
+      return contrast >= minContrast;
+    });
+
+    return validBg || null;
+  };
+
   // --- HANDLE --------------------
 
   const handleClick = useCallback(() => {
@@ -122,6 +150,7 @@ const useColor = () => {
     setBaseColor(hsl);
   }, []);
 
+  // --- USE EFFECTS ----------------
   useEffect(() => {
     if (hslObjColor?.h !== 0) {
       getBaseNeutrals(hslObjColor);
@@ -135,11 +164,25 @@ const useColor = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [baseNeutrals]);
 
+  useEffect(() => {
+    if (basePalette?.length == 0 || !baseNeutrals?.baseLight) return;
+    const primarySolid = findBgColor(basePalette, baseNeutrals?.baseLight, 75);
+    console.log('primarySolid', primarySolid);
+    setPrimaryRoles((prev) => {
+      return {
+        ...prev,
+        solid: primarySolid,
+        ['on solid']: baseNeutrals?.baseLight,
+      };
+    });
+  }, [basePalette, baseNeutrals?.baseLight]);
+
   return {
     inputColor,
     baseColor,
     baseNeutrals,
     basePalette,
+    primaryRoles,
     getHslObjColor,
     getHslColor,
     handleClick,

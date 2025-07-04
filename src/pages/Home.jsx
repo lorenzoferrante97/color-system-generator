@@ -12,6 +12,7 @@ export default function Home() {
     handleClick,
     baseNeutrals,
     basePalette,
+    primaryRoles,
   } = useGlobalContext();
 
   return (
@@ -52,7 +53,6 @@ export default function Home() {
           />
         </div>
         {/* base palette */}
-        {console.log('base palette: ', basePalette)}
         <div className='flex items-center'>
           {basePalette.map((color, i) => {
             return (
@@ -63,6 +63,19 @@ export default function Home() {
               />
             );
           })}
+        </div>
+        {/* color roles - primary */}
+        <div className='flex items-center'>
+          {/* solid */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${primaryRoles?.solid}` }}
+          />
+          {/* on solid */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${primaryRoles['on solid']}` }}
+          />
         </div>
       </div>
     </>
