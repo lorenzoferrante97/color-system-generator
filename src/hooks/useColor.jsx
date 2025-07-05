@@ -149,30 +149,57 @@ const useColor = () => {
     return validBg || null;
   };
 
+  const findTextColor = (palette, minContrast, bgColor) => {
+    if (!palette || !bgColor) return null;
+
+    const rgbBgColor = formatRgb(rgb(bgColor));
+
+    const validTextColor = palette?.find((textColor) => {
+      const rgbTextColor = formatRgb(rgb(textColor));
+      const contrast = Math.abs(calcAPCA(rgbTextColor, rgbBgColor));
+      return contrast >= minContrast;
+    });
+    console.log('validtextColor: ', validTextColor);
+
+    return validTextColor || null;
+  };
+
   // get roles
-  const getRoles = (
+  const getRoles = ({
     palette,
     textColor,
     minContrast,
     minContrastWithBg,
     bgColor,
     role,
-    setRoleGroup
-  ) => {
-    const primarySolid = findBgColor(
-      palette,
-      textColor,
-      minContrast,
-      minContrastWithBg,
-      bgColor
-    );
-    setRoleGroup((prev) => {
-      return {
-        ...prev,
-        [role]: primarySolid,
-        [`on ${role}`]: textColor,
-      };
-    });
+    setRoleGroup,
+  }) => {
+    if (textColor !== null) {
+      const primarySolid = findBgColor(
+        palette,
+        textColor,
+        minContrast,
+        minContrastWithBg,
+        bgColor
+      );
+      setRoleGroup((prev) => {
+        return {
+          ...prev,
+          [role]: primarySolid,
+          [`on ${role}`]: textColor,
+        };
+      });
+    } else {
+      const primarySoftText = findTextColor(palette, minContrast, bgColor);
+      console.log('primarySoftText: ', primarySoftText);
+      setRoleGroup((prev) => {
+        return {
+          ...prev,
+          [role]: bgColor,
+          [`on ${role}`]: primarySoftText,
+        };
+      });
+    }
   };
 
   // --- HANDLE --------------------
@@ -201,15 +228,39 @@ const useColor = () => {
   useEffect(() => {
     if (basePalette?.length == 0 || !baseNeutrals?.baseLight) return;
 
-    getRoles(
-      basePalette,
-      baseNeutrals?.baseLight,
-      75,
-      60,
-      baseNeutrals?.baseLight,
-      'solid',
-      setPrimaryRoles
-    );
+    const roleConfigs = [
+      {
+        palette: basePalette,
+        textColor: baseNeutrals?.baseLight,
+        minContrast: 75,
+        minContrastWithBg: 60,
+        bgColor: baseNeutrals?.baseLight,
+        role: 'solid',
+        setRoleGroup: setPrimaryRoles,
+      },
+      {
+        palette: basePalette,
+        textColor: null,
+        minContrast: 60,
+        minContrastWithBg: null,
+        bgColor: basePalette[3],
+        role: 'soft',
+        setRoleGroup: setPrimaryRoles,
+      },
+    ];
+
+    // getRoles(
+    //   basePalette,
+    //   baseNeutrals?.baseLight,
+    //   75,
+    //   60,
+    //   baseNeutrals?.baseLight,
+    //   'solid',
+    //   setPrimaryRoles
+    // );
+
+    roleConfigs.forEach(getRoles);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [basePalette, baseNeutrals?.baseLight]);
 

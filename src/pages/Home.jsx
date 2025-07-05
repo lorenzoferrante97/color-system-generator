@@ -64,7 +64,7 @@ export default function Home() {
             );
           })}
         </div>
-        {/* color roles - primary */}
+        {/* color roles - primary - solid */}
         <div className='flex items-center'>
           {/* solid */}
           <div
@@ -75,6 +75,19 @@ export default function Home() {
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${primaryRoles['on solid']}` }}
+          />
+        </div>
+        {/* color roles - primary - soft */}
+        <div className='flex items-center'>
+          {/* soft */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${primaryRoles?.soft}` }}
+          />
+          {/* on soft */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${primaryRoles['on soft']}` }}
           />
         </div>
       </div>
