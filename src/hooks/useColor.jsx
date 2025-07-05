@@ -79,7 +79,7 @@ const useColor = () => {
     return { ...color, h };
   };
 
-  //NOTE - get tints
+  //NOTE - get palette
   const getBasePalette = (color, steps) => {
     const baseStep = {
       mode: 'hsl',
@@ -111,10 +111,7 @@ const useColor = () => {
       .map((c) => wrapHue(c))
       .map(formatHsl);
 
-    // gamut hsl
-    // const toHsl = toGamut('hsl');
-
-    // create shades
+    // create shades + set palette
     const interpolatedShades = interpolate([baseStep, lastShadeStep], 'hsl');
     let shades = samples(steps)
       .map(interpolatedShades)
@@ -149,6 +146,7 @@ const useColor = () => {
     return validBg || null;
   };
 
+  // find text color with correct APCA contrast
   const findTextColor = (palette, minContrast, bgColor) => {
     if (!palette || !bgColor) return null;
 
@@ -248,16 +246,6 @@ const useColor = () => {
         setRoleGroup: setPrimaryRoles,
       },
     ];
-
-    // getRoles(
-    //   basePalette,
-    //   baseNeutrals?.baseLight,
-    //   75,
-    //   60,
-    //   baseNeutrals?.baseLight,
-    //   'solid',
-    //   setPrimaryRoles
-    // );
 
     roleConfigs.forEach(getRoles);
 
