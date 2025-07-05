@@ -36,8 +36,11 @@ const useColor = () => {
     baseDark: null,
   });
 
-  //NOTE - tints & shades
+  //NOTE - base palette
   const [basePalette, setBasepalette] = useState([]);
+
+  //NOTE - neutral palette
+  const [neutralPalette, setNeutralPalette] = useState([]);
 
   //NOTE - primary roles
   const [primaryRoles, setPrimaryRoles] = useState({
@@ -121,6 +124,21 @@ const useColor = () => {
     shades.shift();
 
     setBasepalette([...tints, ...shades]);
+  };
+
+  // NOTE - get neutral palette
+  const getneutralPalette = (baseWhite, baseDark, steps) => {
+    // clamp gamut
+    const clamp = clampGamut('rgb');
+
+    const interpolateNeutrals = interpolate([baseWhite, baseDark], 'hsl');
+    const neutrals = samples(steps)
+      .map(interpolateNeutrals)
+      .map(clamp)
+      .map((c) => wrapHue(c))
+      .map(formatHsl);
+
+    setNeutralPalette(neutrals);
   };
 
   // find bg color with correct APCA contrast
@@ -219,6 +237,7 @@ const useColor = () => {
   useEffect(() => {
     if (baseNeutrals.baseLight !== null) {
       getBasePalette(hslObjColor, 12);
+      getneutralPalette(baseNeutrals?.baseLight, baseNeutrals?.baseDark, 23);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [baseNeutrals]);
@@ -258,6 +277,7 @@ const useColor = () => {
     baseNeutrals,
     basePalette,
     primaryRoles,
+    neutralPalette,
     getHslObjColor,
     getHslColor,
     handleClick,
