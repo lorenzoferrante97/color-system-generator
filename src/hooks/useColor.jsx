@@ -42,6 +42,14 @@ const useColor = () => {
   //NOTE - neutral palette
   const [neutralPalette, setNeutralPalette] = useState([]);
 
+  //NOTE - semantic palettes
+  const [semanticPalette, setSemanticPalette] = useState({
+    error: [],
+    warning: [],
+    success: [],
+    info: [],
+  });
+
   //NOTE - primary roles
   const [primaryRoles, setPrimaryRoles] = useState({
     solid: null,
@@ -67,6 +75,14 @@ const useColor = () => {
     warning: null,
     success: null,
     info: null,
+  });
+
+  //NOTE - semantic roles
+  const [errorRoles, setErrorRoles] = useState({
+    solid: null,
+    ['on solid']: null,
+    soft: null,
+    ['on soft']: null,
   });
 
   // --- FUNCTIONS ----------------------------------------------------------
@@ -102,7 +118,7 @@ const useColor = () => {
   };
 
   //NOTE - get palette
-  const getBasePalette = (color, steps) => {
+  const getBasePalette = (color, steps, role) => {
     const baseStep = {
       mode: 'hsl',
       h: color.h,
@@ -142,7 +158,16 @@ const useColor = () => {
       .map(formatHsl);
     shades.shift();
 
-    setBasepalette([...tints, ...shades]);
+    if (role === 'base') {
+      setBasepalette([...tints, ...shades]);
+    } else {
+      setSemanticPalette((prev) => {
+        return {
+          ...prev,
+          [role]: [...tints, ...shades],
+        };
+      });
+    }
   };
 
   //NOTE - get semantic hues
@@ -333,11 +358,27 @@ const useColor = () => {
 
   useEffect(() => {
     if (baseNeutrals.baseLight !== null) {
-      getBasePalette(hslObjColor, 12);
+      getBasePalette(hslObjColor, 12, 'base');
       getneutralPalette(baseNeutrals?.baseLight, baseNeutrals?.baseDark, 23);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [baseNeutrals]);
+
+  useEffect(() => {
+    if (
+      !semanticColors?.error ||
+      !semanticColors?.warning ||
+      !semanticColors?.success ||
+      !semanticColors?.info
+    )
+      return;
+
+    getBasePalette(semanticColors?.error, 12, 'error');
+    getBasePalette(semanticColors?.warning, 12, 'warning');
+    getBasePalette(semanticColors?.success, 12, 'success');
+    getBasePalette(semanticColors?.info, 12, 'info');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [semanticColors]);
 
   useEffect(() => {
     if (basePalette?.length == 0 || !baseNeutrals?.baseLight) return;
