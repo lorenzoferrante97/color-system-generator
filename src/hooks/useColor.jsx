@@ -61,6 +61,14 @@ const useColor = () => {
     ['border alt']: null,
   });
 
+  //NOTE - semantic hues
+  const [semanticColors, setSemanticColors] = useState({
+    error: null,
+    warning: null,
+    success: null,
+    info: null,
+  });
+
   // --- FUNCTIONS ----------------------------------------------------------
 
   //NOTE - get hsl object color
@@ -135,6 +143,51 @@ const useColor = () => {
     shades.shift();
 
     setBasepalette([...tints, ...shades]);
+  };
+
+  //NOTE - get semantic hues
+  const getSemanticHues = (baseColor) => {
+    const huesPreset = {
+      error: [334, 341, 355, 5],
+      warning: [15, 25, 35, 45],
+      success: [80, 100, 124, 139],
+      info: [180, 192, 206, 221],
+    };
+
+    // get distance between hues
+    const getDistance = (h1, h2) => {
+      const d = Math.abs(h1 - h2);
+      return d > 180 ? 360 - d : d;
+    };
+
+    const getCorrectHue = (presetHues) => {
+      return presetHues.reduce(
+        (correctHue, hue) => {
+          const distance = getDistance(baseColor?.h, hue);
+          return distance > correctHue.distance
+            ? { hue, distance }
+            : correctHue;
+        },
+        {
+          correctHue: presetHues[0],
+          distance: 0,
+        }
+      ).hue;
+    };
+
+    const hues = {
+      error: getCorrectHue(huesPreset?.error),
+      warning: getCorrectHue(huesPreset?.warning),
+      success: getCorrectHue(huesPreset?.success),
+      info: getCorrectHue(huesPreset?.info),
+    };
+    console.log('hues: ', hues);
+    setSemanticColors({
+      error: getHslColor({ ...baseColor, h: hues?.error }),
+      warning: getHslColor({ ...baseColor, h: hues?.warning }),
+      success: getHslColor({ ...baseColor, h: hues?.success }),
+      info: getHslColor({ ...baseColor, h: hues?.info }),
+    });
   };
 
   // NOTE - get neutral palette
@@ -273,7 +326,9 @@ const useColor = () => {
   useEffect(() => {
     if (hslObjColor?.h !== 0) {
       getBaseNeutrals(hslObjColor);
+      getSemanticHues(hslObjColor);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hslObjColor]);
 
   useEffect(() => {
@@ -341,6 +396,7 @@ const useColor = () => {
     primaryRoles,
     neutralPalette,
     neutralRoles,
+    semanticColors,
     getHslObjColor,
     getHslColor,
     handleClick,

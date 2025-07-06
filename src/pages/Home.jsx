@@ -15,6 +15,7 @@ export default function Home() {
     neutralPalette,
     primaryRoles,
     neutralRoles,
+    semanticColors,
   } = useGlobalContext();
 
   return (
@@ -143,6 +144,29 @@ export default function Home() {
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles['border alt']}` }}
+          />
+        </div>
+        {/* semantics colors */}
+        <div className='flex items-center'>
+          {/* error */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${semanticColors?.error}` }}
+          />
+          {/* warning */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${semanticColors?.warning}` }}
+          />
+          {/* success */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${semanticColors?.success}` }}
+          />
+          {/* info */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${semanticColors?.info}` }}
           />
         </div>
       </div>
