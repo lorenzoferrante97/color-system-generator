@@ -78,11 +78,31 @@ const useColor = () => {
   });
 
   //NOTE - semantic roles
-  const [errorRoles, setErrorRoles] = useState({
-    solid: null,
-    ['on solid']: null,
-    soft: null,
-    ['on soft']: null,
+  const [semanticRoles, setSemanticRoles] = useState({
+    error: {
+      solid: null,
+      ['on solid']: null,
+      soft: null,
+      ['on soft']: null,
+    },
+    warning: {
+      solid: null,
+      ['on solid']: null,
+      soft: null,
+      ['on soft']: null,
+    },
+    success: {
+      solid: null,
+      ['on solid']: null,
+      soft: null,
+      ['on soft']: null,
+    },
+    info: {
+      solid: null,
+      ['on solid']: null,
+      soft: null,
+      ['on soft']: null,
+    },
   });
 
   // --- FUNCTIONS ----------------------------------------------------------
@@ -176,7 +196,7 @@ const useColor = () => {
       error: [334, 341, 355, 5],
       warning: [15, 25, 35, 45],
       success: [80, 100, 124, 139],
-      info: [180, 192, 206, 221],
+      info: [200, 215, 230, 245],
     };
 
     // get distance between hues
@@ -277,32 +297,60 @@ const useColor = () => {
     minContrastWithBg,
     bgColor,
     role,
+    sem,
     setRoleGroup,
   }) => {
-    if (textColor !== null) {
-      const primarySolid = findBgColor(
+    if (role === 'solid') {
+      const solidColor = findBgColor(
         palette,
         textColor,
         minContrast,
         minContrastWithBg,
         bgColor
       );
-      setRoleGroup((prev) => {
-        return {
-          ...prev,
-          [role]: primarySolid,
-          [`on ${role}`]: textColor,
-        };
-      });
+      if (!sem) {
+        setRoleGroup((prev) => {
+          return {
+            ...prev,
+            [role]: solidColor,
+            [`on ${role}`]: textColor,
+          };
+        });
+      } else {
+        setRoleGroup((prev) => {
+          return {
+            ...prev,
+            [sem]: {
+              ...prev[sem],
+              [role]: solidColor,
+              [`on ${role}`]: textColor,
+            },
+          };
+        });
+      }
     } else if (role === 'soft') {
-      const primarySoftText = findTextColor(palette, minContrast, bgColor);
-      setRoleGroup((prev) => {
-        return {
-          ...prev,
-          [role]: bgColor,
-          [`on ${role}`]: primarySoftText,
-        };
-      });
+      const softTextColor = findTextColor(palette, minContrast, bgColor);
+      console.log('soft text color: ', softTextColor);
+      if (!sem) {
+        setRoleGroup((prev) => {
+          return {
+            ...prev,
+            [role]: bgColor,
+            [`on ${role}`]: softTextColor,
+          };
+        });
+      } else {
+        setRoleGroup((prev) => {
+          return {
+            ...prev,
+            [sem]: {
+              ...prev[sem],
+              [role]: bgColor,
+              [`on ${role}`]: softTextColor,
+            },
+          };
+        });
+      }
     } else if (role === 'background') {
       // const neutralTextColor = findTextColor(palette, minContrast, bgColor);
       const neutralTextColor = 'hsl(0, 0%, 0%)';
@@ -373,10 +421,10 @@ const useColor = () => {
     )
       return;
 
-    getBasePalette(semanticColors?.error, 12, 'error');
-    getBasePalette(semanticColors?.warning, 12, 'warning');
-    getBasePalette(semanticColors?.success, 12, 'success');
-    getBasePalette(semanticColors?.info, 12, 'info');
+    getBasePalette(hsl(semanticColors?.error), 12, 'error');
+    getBasePalette(hsl(semanticColors?.warning), 12, 'warning');
+    getBasePalette(hsl(semanticColors?.success), 12, 'success');
+    getBasePalette(hsl(semanticColors?.info), 12, 'info');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [semanticColors]);
 
@@ -384,6 +432,7 @@ const useColor = () => {
     if (basePalette?.length == 0 || !baseNeutrals?.baseLight) return;
 
     const roleConfigs = [
+      // base color -> solid
       {
         palette: basePalette,
         textColor: baseNeutrals?.baseLight,
@@ -393,6 +442,7 @@ const useColor = () => {
         role: 'solid',
         setRoleGroup: setPrimaryRoles,
       },
+      // base color -> soft
       {
         palette: basePalette,
         textColor: null,
@@ -402,6 +452,7 @@ const useColor = () => {
         role: 'soft',
         setRoleGroup: setPrimaryRoles,
       },
+      // neutral color -> background
       {
         palette: neutralPalette,
         textColor: null,
@@ -412,6 +463,7 @@ const useColor = () => {
         role: 'background',
         setRoleGroup: setNeutralRoles,
       },
+      // neutral color -> border
       {
         palette: neutralPalette,
         textColor: null,
@@ -421,6 +473,94 @@ const useColor = () => {
         bgColor: neutralPalette[2],
         role: 'border',
         setRoleGroup: setNeutralRoles,
+      },
+      // semantic color -> error -> solid
+      {
+        palette: semanticPalette?.error,
+        textColor: semanticPalette?.error[0],
+        minContrast: 75,
+        minContrastWithBg: 60,
+        bgColor: baseNeutrals?.baseLight,
+        role: 'solid',
+        sem: 'error',
+        setRoleGroup: setSemanticRoles,
+      },
+      // semantic color -> error -> soft
+      {
+        palette: semanticPalette?.error,
+        textColor: null,
+        minContrast: 60,
+        minContrastWithBg: null,
+        bgColor: semanticPalette?.error[3],
+        role: 'soft',
+        sem: 'error',
+        setRoleGroup: setSemanticRoles,
+      },
+      // semantic color -> warning -> solid
+      {
+        palette: semanticPalette?.warning,
+        textColor: semanticPalette?.warning[0],
+        minContrast: 75,
+        minContrastWithBg: 60,
+        bgColor: baseNeutrals?.baseLight,
+        role: 'solid',
+        sem: 'warning',
+        setRoleGroup: setSemanticRoles,
+      },
+      // semantic color -> warning -> soft
+      {
+        palette: semanticPalette?.warning,
+        textColor: null,
+        minContrast: 60,
+        minContrastWithBg: null,
+        bgColor: semanticPalette?.warning[3],
+        role: 'soft',
+        sem: 'warning',
+        setRoleGroup: setSemanticRoles,
+      },
+      // semantic color -> success -> solid
+      {
+        palette: semanticPalette?.success,
+        textColor: semanticPalette?.success[0],
+        minContrast: 75,
+        minContrastWithBg: 60,
+        bgColor: baseNeutrals?.baseLight,
+        role: 'solid',
+        sem: 'success',
+        setRoleGroup: setSemanticRoles,
+      },
+      // semantic color -> success -> soft
+      {
+        palette: semanticPalette?.success,
+        textColor: null,
+        minContrast: 60,
+        minContrastWithBg: null,
+        bgColor: semanticPalette?.success[3],
+        role: 'soft',
+        sem: 'success',
+        setRoleGroup: setSemanticRoles,
+      },
+      // semantic color -> info -> solid
+      {
+        palette: semanticPalette?.info,
+        textColor: semanticPalette?.info[0],
+        minContrast: 75,
+        minContrastWithBg: 60,
+        bgColor: baseNeutrals?.baseLight,
+        role: 'solid',
+        sem: 'info',
+        setRoleGroup: setSemanticRoles,
+      },
+      // semantic color -> info -> soft
+      {
+        palette: semanticPalette?.info,
+        textColor: null,
+        minContrast: 60,
+        minContrastWithBg: null,
+        bgColor: semanticPalette?.info[3],
+        role: 'soft',
+        sem: 'info',
+        setRoleGroup: setSemanticRoles,
       },
     ];
 
@@ -438,6 +578,8 @@ const useColor = () => {
     neutralPalette,
     neutralRoles,
     semanticColors,
+    semanticRoles,
+    semanticPalette,
     getHslObjColor,
     getHslColor,
     handleClick,
