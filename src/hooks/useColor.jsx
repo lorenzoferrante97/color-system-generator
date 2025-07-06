@@ -50,6 +50,17 @@ const useColor = () => {
     ['on soft']: null,
   });
 
+  //NOTE - neutral roles
+  const [neutralRoles, setNeutralRoles] = useState({
+    background: null,
+    ['background alt 1']: null,
+    ['background alt 2']: null,
+    ['on background']: null,
+    ['on background alt']: null,
+    border: null,
+    ['border alt']: null,
+  });
+
   // --- FUNCTIONS ----------------------------------------------------------
 
   //NOTE - get hsl object color
@@ -67,8 +78,8 @@ const useColor = () => {
   //NOTE - get base neutrals
   const getBaseNeutrals = (color) => {
     const fixedHue = color.h;
-    const tempLight = { mode: 'hsl', h: fixedHue, s: 0.2, l: 0.98 };
-    const tempDark = { mode: 'hsl', h: fixedHue, s: 0.2, l: 0.08 };
+    const tempLight = { mode: 'hsl', h: fixedHue, s: 0.1, l: 0.98 };
+    const tempDark = { mode: 'hsl', h: fixedHue, s: 0.1, l: 0.08 };
 
     setBaseNeutrals({
       baseLight: formatHsl(tempLight),
@@ -175,7 +186,6 @@ const useColor = () => {
       const contrast = Math.abs(calcAPCA(rgbTextColor, rgbBgColor));
       return contrast >= minContrast;
     });
-    console.log('validtextColor: ', validTextColor);
 
     return validTextColor || null;
   };
@@ -185,6 +195,7 @@ const useColor = () => {
     palette,
     textColor,
     minContrast,
+    minContrastVariant,
     minContrastWithBg,
     bgColor,
     role,
@@ -205,14 +216,45 @@ const useColor = () => {
           [`on ${role}`]: textColor,
         };
       });
-    } else {
+    } else if (role === 'soft') {
       const primarySoftText = findTextColor(palette, minContrast, bgColor);
-      console.log('primarySoftText: ', primarySoftText);
       setRoleGroup((prev) => {
         return {
           ...prev,
           [role]: bgColor,
           [`on ${role}`]: primarySoftText,
+        };
+      });
+    } else if (role === 'background') {
+      // const neutralTextColor = findTextColor(palette, minContrast, bgColor);
+      const neutralTextColor = 'hsl(0, 0%, 0%)';
+      const neutralTextColorVariant = findTextColor(
+        palette,
+        minContrastVariant,
+        bgColor
+      );
+      setRoleGroup((prev) => {
+        return {
+          ...prev,
+          [role]: palette[0],
+          [`${role} alt 1`]: palette[1],
+          [`${role} alt 2`]: bgColor,
+          [`on ${role}`]: neutralTextColor,
+          [`on ${role} alt`]: neutralTextColorVariant,
+        };
+      });
+    } else {
+      const neutralBorderColor = findTextColor(palette, minContrast, bgColor);
+      const neutralBorderVariantColor = findTextColor(
+        palette,
+        minContrastVariant,
+        bgColor
+      );
+      setRoleGroup((prev) => {
+        return {
+          ...prev,
+          [role]: neutralBorderColor,
+          [`${role} alt`]: neutralBorderVariantColor,
         };
       });
     }
@@ -264,12 +306,32 @@ const useColor = () => {
         role: 'soft',
         setRoleGroup: setPrimaryRoles,
       },
+      {
+        palette: neutralPalette,
+        textColor: null,
+        minContrast: 90,
+        minContrastVariant: 75,
+        minContrastWithBg: null,
+        bgColor: neutralPalette[2],
+        role: 'background',
+        setRoleGroup: setNeutralRoles,
+      },
+      {
+        palette: neutralPalette,
+        textColor: null,
+        minContrast: 30,
+        minContrastVariant: 15,
+        minContrastWithBg: null,
+        bgColor: neutralPalette[2],
+        role: 'border',
+        setRoleGroup: setNeutralRoles,
+      },
     ];
 
     roleConfigs.forEach(getRoles);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [basePalette, baseNeutrals?.baseLight]);
+  }, [basePalette, baseNeutrals]);
 
   return {
     inputColor,
@@ -278,6 +340,7 @@ const useColor = () => {
     basePalette,
     primaryRoles,
     neutralPalette,
+    neutralRoles,
     getHslObjColor,
     getHslColor,
     handleClick,

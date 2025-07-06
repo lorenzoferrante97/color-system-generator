@@ -14,6 +14,7 @@ export default function Home() {
     basePalette,
     neutralPalette,
     primaryRoles,
+    neutralRoles,
   } = useGlobalContext();
 
   return (
@@ -101,6 +102,47 @@ export default function Home() {
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${primaryRoles['on soft']}` }}
+          />
+        </div>
+        {/* color roles - neutrals - background */}
+        <div className='flex items-center'>
+          {/* bg */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${neutralRoles?.background}` }}
+          />
+          {/* bg alt 1 */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${neutralRoles['background alt 1']}` }}
+          />
+          {/* bg alt 2 */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${neutralRoles['background alt 2']}` }}
+          />
+          {/* on bg */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${neutralRoles['on background']}` }}
+          />
+          {/* on bg alt */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${neutralRoles['on background alt']}` }}
+          />
+        </div>
+        {/* color roles - neutrals - border */}
+        <div className='flex items-center'>
+          {/* border */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${neutralRoles?.border}` }}
+          />
+          {/* border alt */}
+          <div
+            className='aspect-square size-12'
+            style={{ backgroundColor: `${neutralRoles['border alt']}` }}
           />
         </div>
       </div>
