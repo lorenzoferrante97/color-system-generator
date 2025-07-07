@@ -1,6 +1,7 @@
 // start code
 
 import { useGlobalContext } from '../contexts/globalContext';
+import { Link } from 'react-router-dom';
 // import hero-cover from "../../public/hero-cover.webp"
 
 export default function Home() {
@@ -45,7 +46,7 @@ export default function Home() {
             <button
               onClick={handleClick}
               className='font-body-l-bold bg-neutral-solid lg:hover:bg-neutral-solid-hover transition-base min-h-12 w-full rounded-full px-3 py-1 text-white transition-all md:w-fit md:px-7 md:py-5 lg:hover:px-10'>
-              Crea il Color System
+              <Link to={'/test'}>Crea il Color System</Link>
             </button>
           </div>
         </div>
