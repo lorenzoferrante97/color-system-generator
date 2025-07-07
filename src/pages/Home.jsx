@@ -103,34 +103,40 @@ export default function Home() {
         {/* color roles - primary - soft */}
         <div className='flex items-center'>
           {/* soft */}
+          <span>{primaryRoles?.soft}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${primaryRoles?.soft}` }}
           />
           {/* on soft */}
+          <span>{primaryRoles['on soft']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${primaryRoles['on soft']}` }}
           />
         </div>
         {/* color roles - neutrals - background */}
-        <div className='flex items-center'>
+        <div className='flex max-w-full flex-wrap items-center'>
           {/* bg */}
+          <span>{neutralRoles?.background}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles?.background}` }}
           />
           {/* bg alt 1 */}
+          <span>{neutralRoles['background alt 1']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles['background alt 1']}` }}
           />
           {/* bg alt 2 */}
+          <span>{neutralRoles['background alt 2']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles['background alt 2']}` }}
           />
           {/* on bg */}
+          <span>{neutralRoles['on background']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles['on background']}` }}

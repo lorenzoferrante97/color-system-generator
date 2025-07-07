@@ -269,7 +269,9 @@ const useColor = () => {
       .map((c) => wrapHue(c))
       .map(formatHsl);
 
-    setNeutralPalette(neutrals);
+    const oklchPalette = convertToOklch(neutrals);
+
+    setNeutralPalette(oklchPalette);
   };
 
   //NOTE - find bg color with correct APCA contrast
@@ -381,13 +383,14 @@ const useColor = () => {
         minContrastVariant,
         bgColor
       );
+
       setRoleGroup((prev) => {
         return {
           ...prev,
           [role]: palette[0],
           [`${role} alt 1`]: palette[1],
           [`${role} alt 2`]: bgColor,
-          [`on ${role}`]: neutralTextColor,
+          [`on ${role}`]: 'oklch(0 0 0)',
           [`on ${role} alt`]: neutralTextColorVariant,
         };
       });
