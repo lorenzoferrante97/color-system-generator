@@ -119,6 +119,20 @@ const useColor = () => {
     return formatHsl(color);
   };
 
+  //NOTE - round oklch decimals
+  const round = (num, decimals = 4) =>
+    Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
+
+  //NOTE - convert to oklch
+  const convertToOklch = (palette) => {
+    if (!palette) return null;
+    return palette?.map((color) => {
+      const oklchColor = oklch(color);
+      // return formatCss(oklch(color));
+      return `oklch(${round(oklchColor?.l)} ${round(oklchColor?.c)} ${round(oklchColor?.h)}`;
+    });
+  };
+
   //NOTE - get base neutrals
   const getBaseNeutrals = (color) => {
     const fixedHue = color.h;
@@ -163,7 +177,7 @@ const useColor = () => {
 
     // create tints
     const interpolatedTints = interpolate([lastTintStep, baseStep], 'hsl');
-    const tints = samples(steps)
+    let tints = samples(steps)
       .map(interpolatedTints)
       .map(clamp)
       .map((c) => wrapHue(c))
@@ -177,6 +191,10 @@ const useColor = () => {
       .map((c) => wrapHue(c))
       .map(formatHsl);
     shades.shift();
+
+    //REVIEW - inserire conversione tints e shades in formato oklch
+    tints = convertToOklch(tints);
+    shades = convertToOklch(shades);
 
     if (role === 'base') {
       setBasepalette([...tints, ...shades]);
@@ -250,7 +268,7 @@ const useColor = () => {
     setNeutralPalette(neutrals);
   };
 
-  // find bg color with correct APCA contrast
+  //NOTE - find bg color with correct APCA contrast
   const findBgColor = (
     palette,
     textColor,
@@ -288,7 +306,7 @@ const useColor = () => {
     return validTextColor || null;
   };
 
-  // get roles
+  //NOTE - get roles
   const getRoles = ({
     palette,
     textColor,
