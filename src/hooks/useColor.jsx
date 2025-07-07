@@ -377,7 +377,7 @@ const useColor = () => {
       }
     } else if (role === 'background') {
       // const neutralTextColor = findTextColor(palette, minContrast, bgColor);
-      const neutralTextColor = 'hsl(0, 0%, 0%)';
+      // const neutralTextColor = 'hsl(0, 0%, 0%)';
       const neutralTextColorVariant = findTextColor(
         palette,
         minContrastVariant,

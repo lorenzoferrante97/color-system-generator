@@ -142,26 +142,29 @@ export default function Home() {
             style={{ backgroundColor: `${neutralRoles['on background']}` }}
           />
           {/* on bg alt */}
+          <span>{neutralRoles['on background alt']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles['on background alt']}` }}
           />
         </div>
         {/* color roles - neutrals - border */}
-        <div className='flex items-center'>
+        <div className='flex items-center gap-1'>
           {/* border */}
+          <span>{neutralRoles?.border}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles?.border}` }}
           />
           {/* border alt */}
+          <span>{neutralRoles['border alt']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${neutralRoles['border alt']}` }}
           />
         </div>
         {/* semantics colors */}
-        <div className='flex items-center'>
+        <div className='flex max-w-full flex-wrap items-center'>
           {/* error */}
           <div
             className='aspect-square size-12'
@@ -234,11 +237,13 @@ export default function Home() {
         {/* color roles - error - solid */}
         <div className='flex items-center'>
           {/* solid */}
+          <span>{semanticRoles?.error?.solid}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.error?.solid}` }}
           />
           {/* on solid */}
+          <span>{semanticRoles?.error['on solid']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.error['on solid']}` }}
@@ -247,11 +252,13 @@ export default function Home() {
         {/* color roles - error - soft */}
         <div className='flex items-center'>
           {/* soft */}
+          <span>{semanticRoles?.error?.soft}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.error?.soft}` }}
           />
           {/* on soft */}
+          <span>{semanticRoles?.error['on soft']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.error['on soft']}` }}
@@ -260,11 +267,13 @@ export default function Home() {
         {/* color roles - warning - solid */}
         <div className='flex items-center'>
           {/* solid */}
+          <span>{semanticRoles?.warning?.solid}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.warning?.solid}` }}
           />
           {/* on solid */}
+          <span>{semanticRoles?.warning['on solid']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.warning['on solid']}` }}
@@ -273,11 +282,13 @@ export default function Home() {
         {/* color roles - warning - soft */}
         <div className='flex items-center'>
           {/* soft */}
+          <span>{semanticRoles?.warning?.soft}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.warning?.soft}` }}
           />
           {/* on soft */}
+          <span>{semanticRoles?.warning['on soft']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.warning['on soft']}` }}
@@ -286,11 +297,13 @@ export default function Home() {
         {/* color roles - success - solid */}
         <div className='flex items-center'>
           {/* solid */}
+          <span>{semanticRoles?.success?.solid}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.success?.solid}` }}
           />
           {/* on solid */}
+          <span>{semanticRoles?.success['on solid']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.success['on solid']}` }}
@@ -299,11 +312,13 @@ export default function Home() {
         {/* color roles - success - soft */}
         <div className='flex items-center'>
           {/* soft */}
+          <span>{semanticRoles?.success?.soft}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.success?.soft}` }}
           />
           {/* on soft */}
+          <span>{semanticRoles?.success['on soft']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.success['on soft']}` }}
@@ -312,11 +327,13 @@ export default function Home() {
         {/* color roles - info - solid */}
         <div className='flex items-center'>
           {/* solid */}
+          <span>{semanticRoles?.info?.solid}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.info?.solid}` }}
           />
           {/* on solid */}
+          <span>{semanticRoles?.info['on solid']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.info['on solid']}` }}
@@ -325,11 +342,13 @@ export default function Home() {
         {/* color roles - info - soft */}
         <div className='flex items-center'>
           {/* soft */}
+          <span>{semanticRoles?.info?.soft}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.info?.soft}` }}
           />
           {/* on soft */}
+          <span>{semanticRoles?.info['on soft']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${semanticRoles?.info['on soft']}` }}
