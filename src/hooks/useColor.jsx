@@ -128,7 +128,6 @@ const useColor = () => {
     if (!palette) return null;
     return palette?.map((color) => {
       const oklchColor = oklch(color);
-      // return formatCss(oklch(color));
       return `oklch(${round(oklchColor?.l)} ${round(oklchColor?.c)} ${round(oklchColor?.h)}`;
     });
   };
@@ -139,9 +138,14 @@ const useColor = () => {
     const tempLight = { mode: 'hsl', h: fixedHue, s: 0.1, l: 0.98 };
     const tempDark = { mode: 'hsl', h: fixedHue, s: 0.1, l: 0.08 };
 
+    const oklchLight = oklch(tempLight);
+    const oklchDark = oklch(tempDark);
+
+    //REVIEW - convert to oklch
+
     setBaseNeutrals({
-      baseLight: formatHsl(tempLight),
-      baseDark: formatHsl(tempDark),
+      baseLight: `oklch(${round(oklchLight?.l)} ${round(oklchLight?.c)} ${round(oklchLight?.h)}`,
+      baseDark: `oklch(${round(oklchDark?.l)} ${round(oklchDark?.c)} ${round(oklchDark?.h)}`,
     });
   };
 

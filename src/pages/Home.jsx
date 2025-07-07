@@ -63,7 +63,7 @@ export default function Home() {
             return (
               <>
                 <div key={i} className='flex flex-col'>
-                  <span>{color}</span>
+                  {/* <span>{color}</span> */}
                   <div
                     className='aspect-square size-8'
                     style={{ backgroundColor: `${color}` }}
@@ -88,11 +88,13 @@ export default function Home() {
         {/* color roles - primary - solid */}
         <div className='flex items-center'>
           {/* solid */}
+          <span>{primaryRoles?.solid}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${primaryRoles?.solid}` }}
           />
           {/* on solid */}
+          <span>{primaryRoles['on solid']}</span>
           <div
             className='aspect-square size-12'
             style={{ backgroundColor: `${primaryRoles['on solid']}` }}
