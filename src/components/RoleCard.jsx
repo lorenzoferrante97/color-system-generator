@@ -11,13 +11,13 @@ export default function RoleCard({
     <>
       <div className='flex w-full flex-col items-center gap-2'>
         {/* on color text */}
-        {onColor && <Tag color={onColor} />}
+        {onRole && <Tag color={onColor} />}
         {/* bg color */}
         <div
-          className={`flex aspect-video min-h-20 w-full flex-col rounded-lg p-2 ${onColor ? 'justify-between' : 'justify-end'} ${colorClassname}`}
+          className={`flex aspect-video min-h-20 w-full flex-col rounded-lg p-2 ${onRole ? 'justify-between' : 'justify-end'} ${colorClassname}`}
           style={{ backgroundColor: `${bgColor}` }}>
           {/* on color */}
-          {onColor && (
+          {onRole && (
             <div
               className={`flex aspect-video max-h-20 w-full flex-col items-center rounded-md p-2 ${colorClassname}`}
               style={{ backgroundColor: `${onColor}` }}>

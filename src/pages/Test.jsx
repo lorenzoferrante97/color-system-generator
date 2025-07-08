@@ -61,18 +61,40 @@ export default function Test() {
             />
           </div>
         </div>
-        {/* Neutral Color Roles ------------- */}
+        {/* Neutral Color Roles -> background ------------- */}
         <div className='bg-neutral-base-300 border-neutral-border/20 col-span-full flex flex-col gap-4 rounded-xl border p-4 shadow-xl shadow-black/5'>
-          <h2 className='font-h4 text-center'>Ruoli Colore Neutrale</h2>
+          <h2 className='font-h4 text-center'>Ruoli Neutrali - Background</h2>
           <div className='flex flex-col gap-10 md:max-h-60 md:flex-row'>
-            <RoleCard bgColor={neutralRoles?.background} bgRole='background' />
+            <RoleCard
+              bgColor={neutralRoles?.background}
+              onColor={neutralRoles['on background']}
+              bgRole='background'
+            />
             <RoleCard
               bgColor={neutralRoles['background alt 1']}
+              onColor={neutralRoles['on background']}
               bgRole='background alt 1'
             />
             <RoleCard
               bgColor={neutralRoles['background alt 2']}
+              onColor={neutralRoles['on background']}
               bgRole='background alt 2'
+            />
+          </div>
+        </div>
+        {/* Neutral Color Roles -> on background ------------- */}
+        <div className='bg-neutral-base-300 border-neutral-border/20 col-span-full flex flex-col gap-4 rounded-xl border p-4 shadow-xl shadow-black/5'>
+          <h2 className='font-h4 text-center'>Ruoli Neutrali - Testi</h2>
+          <div className='flex flex-col gap-10 md:max-h-60 md:flex-row'>
+            <RoleCard
+              bgColor={neutralRoles['on background']}
+              onColor={neutralRoles?.background}
+              bgRole='on background'
+            />
+            <RoleCard
+              bgColor={neutralRoles['on background alt']}
+              onColor={neutralRoles?.background}
+              bgRole='on background alt'
             />
           </div>
         </div>
