@@ -23,7 +23,10 @@ export default function Test() {
 
   return (
     <>
-      <div></div>
+      {/* --- HERO ----------------------------------------------------------- */}
+      <div className='bg-neutral-base-200 border-neutral-base-300 perfect-center h-[20vh] w-full flex-col rounded-xl border-8 p-4'>
+        <h1 className='font-h1'>Color System</h1>
+      </div>
     </>
   );
 }
