@@ -128,7 +128,7 @@ const useColor = () => {
     if (!palette) return null;
     return palette?.map((color) => {
       const oklchColor = oklch(color);
-      return `oklch(${round(oklchColor?.l)} ${round(oklchColor?.c)} ${round(oklchColor?.h)}`;
+      return `oklch(${round(oklchColor?.l)} ${round(oklchColor?.c)} ${round(oklchColor?.h)})`;
     });
   };
 
