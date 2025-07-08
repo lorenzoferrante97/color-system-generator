@@ -108,6 +108,42 @@ export default function Test() {
             />
           </div>
         </div>
+        {/* Semantic Color Roles ------------- */}
+        <div className='bg-neutral-base-300 border-neutral-border/20 row-grid col-span-full gap-4 rounded-xl border p-4 shadow-xl shadow-black/5'>
+          <h2 className='font-h4 col-span-full text-center'>
+            Ruoli Colori Semantici
+          </h2>
+          {/* Error ------ */}
+          {/* <div className='col-span-full flex flex-col gap-10 md:col-span-4 lg:col-span-6'>
+            <RoleCard
+              bgColor={semanticRoles?.error?.solid}
+              onColor={semanticRoles?.error['on solid']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+            <RoleCard
+              bgColor={semanticRoles?.error?.soft}
+              onColor={semanticRoles?.error['on soft']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+          </div> */}
+
+          <div className='col-span-full flex flex-col gap-10 md:max-h-60 md:flex-row'>
+            <RoleCard
+              bgColor={semanticRoles?.error?.solid}
+              onColor={semanticRoles?.error['on solid']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+            <RoleCard
+              bgColor={semanticRoles?.error?.soft}
+              onColor={semanticRoles?.error['on soft']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+          </div>
+        </div>
       </div>
     </>
   );

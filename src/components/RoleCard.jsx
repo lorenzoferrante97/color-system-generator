@@ -9,7 +9,7 @@ export default function RoleCard({
 }) {
   return (
     <>
-      <div className='flex w-full flex-col items-center gap-2'>
+      <div className='flex w-full flex-col items-center gap-2 md:max-h-60'>
         {/* on color text */}
         {onRole && <Tag color={onColor} />}
         {/* bg color */}
