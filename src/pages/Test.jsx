@@ -43,6 +43,16 @@ export default function Test() {
             <Card color={baseNeutrals?.baseDark} />
           </div>
         </div>
+        {/* Neutrals Base Colors ------------- */}
+        <div className='bg-neutral-base-300 border-neutral-border/20 col-span-full mb-20 flex flex-col gap-4 rounded-xl border p-4 shadow-xl shadow-black/5'>
+          <h2 className='font-h4 text-center'>Semantici base</h2>
+          <div className='flex w-full flex-col justify-between gap-2 lg:flex-row lg:items-center'>
+            <Card color={semanticColors?.error} />
+            <Card color={semanticColors?.warning} />
+            <Card color={semanticColors?.success} />
+            <Card color={semanticColors?.info} />
+          </div>
+        </div>
         {/* Base Color Roles ------------- */}
         <div className='bg-neutral-base-300 border-neutral-border/20 col-span-full flex flex-col gap-4 rounded-xl border p-4 shadow-xl shadow-black/5'>
           <h2 className='font-h4 text-center'>Ruoli Colore Base</h2>
