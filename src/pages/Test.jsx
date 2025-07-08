@@ -2,6 +2,7 @@
 
 import { useGlobalContext } from '../contexts/globalContext';
 import Card from '../components/Card';
+import RoleCard from '../components/RoleCard';
 
 export default function Test() {
   // --- GLOBAL CONTEXT -----------------------------------------------------
@@ -40,6 +41,24 @@ export default function Test() {
           <div className='flex w-full flex-col justify-between gap-2 lg:flex-row lg:items-center'>
             <Card color={baseNeutrals?.baseLight} />
             <Card color={baseNeutrals?.baseDark} />
+          </div>
+        </div>
+        {/* Base Color Roles ------------- */}
+        <div className='bg-neutral-base-300 border-neutral-border/20 col-span-full flex flex-col gap-4 rounded-xl border p-4 shadow-xl shadow-black/5'>
+          <h2 className='font-h4 text-center'>Ruoli Colore Base</h2>
+          <div className='flex flex-col gap-10 md:max-h-60 md:flex-row'>
+            <RoleCard
+              bgColor={primaryRoles?.solid}
+              onColor={primaryRoles['on solid']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+            <RoleCard
+              bgColor={primaryRoles?.soft}
+              onColor={primaryRoles['on soft']}
+              bgRole='soft'
+              onRole='on soft'
+            />
           </div>
         </div>
       </div>
