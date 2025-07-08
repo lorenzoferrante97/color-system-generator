@@ -3,6 +3,7 @@
 import { useGlobalContext } from '../contexts/globalContext';
 import Card from '../components/Card';
 import RoleCard from '../components/RoleCard';
+import Badge from '../components/Badge';
 
 export default function Test() {
   // --- GLOBAL CONTEXT -----------------------------------------------------
@@ -31,7 +32,7 @@ export default function Test() {
       {/* --- COLORS GRID ----------------------------------------------------- */}
       <div className='row-grid w-full gap-3'>
         {/* Base Color ------------- */}
-        <div className='bg-neutral-base-300 border-neutral-border/20 col-span-full flex flex-col gap-4 rounded-xl border p-4 shadow-xl shadow-black/5 md:col-span-3 lg:col-span-5'>
+        <div className='bg-neutral-base-300 border-neutral-border/20 col-span-full flex h-fit flex-col gap-4 rounded-xl border p-4 shadow-xl shadow-black/5 md:col-span-3 lg:col-span-5'>
           <h2 className='font-h4 text-center'>Colore base</h2>
           <Card color={baseColor} colorClassname='max-lg:max-h-none' />
         </div>
@@ -109,26 +110,19 @@ export default function Test() {
           </div>
         </div>
         {/* Semantic Color Roles ------------- */}
-        <div className='bg-neutral-base-300 border-neutral-border/20 row-grid col-span-full gap-4 rounded-xl border p-4 shadow-xl shadow-black/5'>
+        <div className='bg-neutral-base-300 border-neutral-border/20 row-grid col-span-full gap-12 rounded-xl border p-4 shadow-xl shadow-black/5'>
           <h2 className='font-h4 col-span-full text-center'>
             Ruoli Colori Semantici
           </h2>
           {/* Error ------ */}
-          {/* <div className='col-span-full flex flex-col gap-10 md:col-span-4 lg:col-span-6'>
-            <RoleCard
-              bgColor={semanticRoles?.error?.solid}
-              onColor={semanticRoles?.error['on solid']}
-              bgRole='solid'
-              onRole='on solid'
+          <div className='perfect-center col-span-full'>
+            <Badge
+              text='Errore'
+              bg={semanticRoles?.error?.soft}
+              txt={semanticRoles?.error['on soft']}
+              className=''
             />
-            <RoleCard
-              bgColor={semanticRoles?.error?.soft}
-              onColor={semanticRoles?.error['on soft']}
-              bgRole='solid'
-              onRole='on solid'
-            />
-          </div> */}
-
+          </div>
           <div className='col-span-full flex flex-col gap-10 md:max-h-60 md:flex-row'>
             <RoleCard
               bgColor={semanticRoles?.error?.solid}
@@ -141,6 +135,75 @@ export default function Test() {
               onColor={semanticRoles?.error['on soft']}
               bgRole='solid'
               onRole='on solid'
+            />
+          </div>
+          {/* Warning ------ */}
+          <div className='perfect-center col-span-full'>
+            <Badge
+              text='Attenzione'
+              bg={semanticRoles?.warning?.soft}
+              txt={semanticRoles?.warning['on soft']}
+              className=''
+            />
+          </div>
+          <div className='col-span-full flex flex-col gap-10 md:max-h-60 md:flex-row'>
+            <RoleCard
+              bgColor={semanticRoles?.warning?.solid}
+              onColor={semanticRoles?.warning['on solid']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+            <RoleCard
+              bgColor={semanticRoles?.warning?.soft}
+              onColor={semanticRoles?.warning['on soft']}
+              bgRole='soft'
+              onRole='on soft'
+            />
+          </div>
+          {/* Success ------ */}
+          <div className='perfect-center col-span-full'>
+            <Badge
+              text='Successo'
+              bg={semanticRoles?.success?.soft}
+              txt={semanticRoles?.success['on soft']}
+              className=''
+            />
+          </div>
+          <div className='col-span-full flex flex-col gap-10 md:max-h-60 md:flex-row'>
+            <RoleCard
+              bgColor={semanticRoles?.success?.solid}
+              onColor={semanticRoles?.success['on solid']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+            <RoleCard
+              bgColor={semanticRoles?.success?.soft}
+              onColor={semanticRoles?.success['on soft']}
+              bgRole='soft'
+              onRole='on soft'
+            />
+          </div>
+          {/* Info ------ */}
+          <div className='perfect-center col-span-full'>
+            <Badge
+              text='Info'
+              bg={semanticRoles?.info?.soft}
+              txt={semanticRoles?.info['on soft']}
+              className=''
+            />
+          </div>
+          <div className='col-span-full flex flex-col gap-10 md:max-h-60 md:flex-row'>
+            <RoleCard
+              bgColor={semanticRoles?.info?.solid}
+              onColor={semanticRoles?.info['on solid']}
+              bgRole='solid'
+              onRole='on solid'
+            />
+            <RoleCard
+              bgColor={semanticRoles?.info?.soft}
+              onColor={semanticRoles?.info['on soft']}
+              bgRole='soft'
+              onRole='on soft'
             />
           </div>
         </div>
