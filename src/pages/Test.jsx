@@ -207,6 +207,90 @@ export default function Test() {
             />
           </div>
         </div>
+        {/* --- Palettes ----------------------------------------- */}
+        <div className='bg-neutral-base-300 border-neutral-border/20 perfect-center col-span-full flex-col gap-2 rounded-xl border p-4 shadow-xl shadow-black/5'>
+          <h2 className='font-h4 col-span-full mb-8 text-center'>
+            Palette Colori
+          </h2>
+          {/* base palette */}
+          <div className='flex w-fit items-center overflow-hidden rounded-sm'>
+            {basePalette.map((color, i) => {
+              return (
+                <>
+                  <div
+                    className='aspect-square size-8'
+                    style={{ backgroundColor: `${color}` }}
+                  />
+                </>
+              );
+            })}
+          </div>
+          {/* neutral palette */}
+          <div className='flex w-fit items-center overflow-hidden rounded-sm'>
+            {neutralPalette.map((color, i) => {
+              return (
+                <>
+                  <div
+                    className='aspect-square size-8'
+                    style={{ backgroundColor: `${color}` }}
+                  />
+                </>
+              );
+            })}
+          </div>
+          {/* error palette */}
+          <div className='flex w-fit items-center overflow-hidden rounded-sm'>
+            {semanticPalette?.error.map((color, i) => {
+              return (
+                <>
+                  <div
+                    className='aspect-square size-8'
+                    style={{ backgroundColor: `${color}` }}
+                  />
+                </>
+              );
+            })}
+          </div>
+          {/* warning palette */}
+          <div className='flex w-fit items-center overflow-hidden rounded-sm'>
+            {semanticPalette?.warning.map((color, i) => {
+              return (
+                <>
+                  <div
+                    className='aspect-square size-8'
+                    style={{ backgroundColor: `${color}` }}
+                  />
+                </>
+              );
+            })}
+          </div>
+          {/* success palette */}
+          <div className='flex w-fit items-center overflow-hidden rounded-sm'>
+            {semanticPalette?.success.map((color, i) => {
+              return (
+                <>
+                  <div
+                    className='aspect-square size-8'
+                    style={{ backgroundColor: `${color}` }}
+                  />
+                </>
+              );
+            })}
+          </div>
+          {/* info palette */}
+          <div className='flex w-fit items-center overflow-hidden rounded-sm'>
+            {semanticPalette?.info.map((color, i) => {
+              return (
+                <>
+                  <div
+                    className='aspect-square size-8'
+                    style={{ backgroundColor: `${color}` }}
+                  />
+                </>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </>
   );
