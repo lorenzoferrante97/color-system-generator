@@ -218,6 +218,7 @@ export default function Test() {
               return (
                 <>
                   <div
+                    key={i}
                     className='aspect-square size-8'
                     style={{ backgroundColor: `${color}` }}
                   />

@@ -248,7 +248,6 @@ const useColor = () => {
       success: getCorrectHue(huesPreset?.success),
       info: getCorrectHue(huesPreset?.info),
     };
-    console.log('hues: ', hues);
     setSemanticColors({
       error: getHslColor({ ...baseColor, h: hues?.error }),
       warning: getHslColor({ ...baseColor, h: hues?.warning }),
@@ -354,7 +353,6 @@ const useColor = () => {
       }
     } else if (role === 'soft') {
       const softTextColor = findTextColor(palette, minContrast, bgColor);
-      console.log('soft text color: ', softTextColor);
       if (!sem) {
         setRoleGroup((prev) => {
           return {
@@ -384,12 +382,29 @@ const useColor = () => {
         bgColor
       );
 
+      // console.log('bg alt 2: ', bgColor);
+      // console.log('bg alt 1: ', palette[1]);
+
+      //REVIEW - get new 5 colors from bgColor to highest bg color
+      // clamp gamut
+      const clamp = clampGamut('rgb');
+
+      const interpolateNeutrals = interpolate([palette[0], bgColor], 'hsl');
+      const neutrals = samples(5)
+        .map(interpolateNeutrals)
+        .map(clamp)
+        .map((c) => wrapHue(c))
+        .map(formatHsl);
+
+      const oklchPalette = convertToOklch(neutrals);
+      console.log('new palette: ', oklchPalette);
+
       setRoleGroup((prev) => {
         return {
           ...prev,
           [role]: palette[0],
-          [`${role} alt 1`]: palette[1],
-          [`${role} alt 2`]: bgColor,
+          [`${role} alt 1`]: oklchPalette[1],
+          [`${role} alt 2`]: oklchPalette[3],
           [`on ${role}`]: 'oklch(0 0 0)',
           [`on ${role} alt`]: neutralTextColorVariant,
         };
